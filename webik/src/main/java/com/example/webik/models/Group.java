@@ -20,7 +20,10 @@ public class Group {
                 .append(items)
                 .append("}").toString();
     }
-
+    public void addItem(Item item) {
+        this.items.add(item);
+        item.setParentGroup(this);
+    }
     public void printContent() {
         System.out.printf("Current group name: %s id: %s%n [", name, id);
         System.out.println("Items: ");
