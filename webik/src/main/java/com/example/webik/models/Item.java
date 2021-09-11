@@ -52,6 +52,14 @@ public abstract class Item {
                 .append("}").toString();
     }
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
     public Group getParentGroup() {
         return parentGroup;
     }

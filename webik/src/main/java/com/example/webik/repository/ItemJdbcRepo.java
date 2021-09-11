@@ -4,10 +4,7 @@ import com.example.webik.database.DatabaseConnection;
 import com.example.webik.models.Item;
 import com.example.webik.repository.mapper.ItemResultSetMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,23 +96,26 @@ public class ItemJdbcRepo {
         }
         return items;
     }
-    public Item createItem(String itemId) {
-        Item items;
+    public long createItem(Item item) {
+        long newItem= -1;
         try (Connection connection = DatabaseConnection.initializeConnection()) {
-            String query = "INSERT INTO public.item\n" +
-                    "VALUES (id=?,name=?, price=?, configuration=?, parentGroup=?) ";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString('1', itemId);
-            ResultSet resultSet = statement.executeQuery();
-            items = null;
-            if (resultSet.next()) {
-                items= ItemResultSetMapper.mapToPojo(resultSet);
-            }
+            String query = "insert into item(name, base_price,image_url,configuration) values("
+                    + "'" + item.getName()
+                    + "','" + item.getPrice()
+                    + "','" + item.getImageUrl()
+                    + "','" + item.getConfiguration()
+                    + "')";
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            System.out.println(query);
+            statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            newItem = generatedKeys.next() ? generatedKeys.getLong(1) : -1;
+
+            return newItem;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return items;
     }
 
 }
