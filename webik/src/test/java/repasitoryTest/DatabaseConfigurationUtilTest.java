@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class DatabaseConfigurationUtilTest {
-    public static final String DATABASE_PROPERTIES_FILE = "database.properties";
+    public static final String DATABASE_PROPERTIES_FILE = "testDatabase.properties";
 
     public static Properties getTestConnectionProperties() {
         Properties props = new Properties();
