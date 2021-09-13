@@ -21,7 +21,7 @@ public class ItemJdbcRepoTest {
 
         @BeforeAll
         public static void initDatabase() throws SQLException, ClassNotFoundException {
-            Connection databaseConnection = DatabaseConnection.initializeConnection();
+            Connection databaseConnection = TestDatabaseConnection.initializeConnection();
             Statement statement = databaseConnection.createStatement();
             statement.executeUpdate("CREATE TABLE item (" +
                     "id SERIAL PRIMARY KEY," +
@@ -33,7 +33,7 @@ public class ItemJdbcRepoTest {
 
         @Test
         public void testConnection() {
-            assertDoesNotThrow(DatabaseConnection::initializeConnection);
+            assertDoesNotThrow(TestDatabaseConnection::initializeConnection);
         }
 
         @Test
